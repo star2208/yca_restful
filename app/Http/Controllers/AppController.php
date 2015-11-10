@@ -15,8 +15,6 @@ class AppController extends Controller
     {
         $device_id = $request->input("device_id");
         $os_type = $request->input("os_type");
-
-        $data = [];
-        return $data;
+        return null;
     }
 }
