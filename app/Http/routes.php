@@ -16,5 +16,6 @@ $app->get('/', function () use ($app) {
 });
 $app->get('app/startup', ['uses' => 'AppController@startup']);
 $app->get('article/topics', [ 'uses' => 'ArticleController@topics']);
+$app->get('homepage', [ 'uses' => 'ArticleController@homepage']);
 $app->get('article/articles', [ 'uses' => 'ArticleController@articles']);
 $app->get('article/article', [ 'uses' => 'ArticleController@article']);

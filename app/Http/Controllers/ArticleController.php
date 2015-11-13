@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 use App\Article;
+use App\HomePage;
 use App\Topic;
 use Illuminate\Http\Request;
 
@@ -30,4 +31,10 @@ class ArticleController extends Controller
         $article = Article::with('author','topic')->find($id);
         return $article;
     }
+    public function homepage(Request $request)
+    {
+        $article = HomePage::with('author','topic')->where('is_homepage',true)->get();
+        return $article;
+    }
+
 }
