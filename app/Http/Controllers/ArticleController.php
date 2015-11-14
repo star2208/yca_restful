@@ -33,7 +33,9 @@ class ArticleController extends Controller
     }
     public function homepage(Request $request)
     {
-        $article = HomePage::with('author','topic')->where('is_homepage',true)->get();
+        $headline = HomePage::with('author','topic')->where('is_headlines',true)->first();
+        $article = HomePage::with('author','topic')->where('is_homepage',true)->where('id','!=',$headline -> id)->orderBy('publishTime','desc')->get();
+        $article -> prepend($headline);
         return $article;
     }
 
