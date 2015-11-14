@@ -41,8 +41,8 @@ class ArticleController extends Controller
         else
         {
             $article = HomePage::with('author','topic')->where('is_homepage',true)->where('id','!=',$headline -> id)->orderBy('publishTime','desc')->get();
+            $article -> prepend($headline);
         }
-        $article -> prepend($headline);
         return $article;
     }
 
