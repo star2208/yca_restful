@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 use App\Article;
-use App\HomePage;
+use App\ArticleCoverModel;
 use App\Topic;
 use Illuminate\Http\Request;
 
@@ -20,11 +20,6 @@ class ArticleController extends Controller
         return $topics;
     }
 
-    public function articles(Request $request)
-    {
-        $articles = Article::with('author')->paginate(20);
-        return $articles;
-    }
     public function article(Request $request)
     {
         $id = $request->input("id");
@@ -33,17 +28,30 @@ class ArticleController extends Controller
     }
     public function homepage(Request $request)
     {
-        $headline = HomePage::with('author','topic')->where('is_headlines',true)->first();
+        $headline = ArticleCoverModel::with('author','topic')->where('is_headlines',true)->first();
         if(is_null($headline))
         {
-            $article = HomePage::with('author','topic')->where('is_homepage',true)->orderBy('publishTime','desc')->get();
+            $article = ArticleCoverModel::with('author','topic')->where('is_homepage',true)->orderBy('publishTime','desc')->get();
         }
         else
         {
-            $article = HomePage::with('author','topic')->where('is_homepage',true)->where('id','!=',$headline -> id)->orderBy('publishTime','desc')->get();
+            $article = ArticleCoverModel::with('author','topic')->where('is_homepage',true)->where('id','!=',$headline -> id)->orderBy('publishTime','desc')->get();
             $article -> prepend($headline);
         }
         return $article;
     }
 
+    public function topic(Request $request)
+    {
+        $id = $request->input("id");
+        if(is_null($id))
+        {
+            return null;
+        }
+        else
+        {
+            $articles = ArticleCoverModel::with('author','topic')->where('topic_id','=',$id)->paginate(20);
+        }
+        return $articles;
+    }
 }
