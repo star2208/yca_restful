@@ -20,11 +20,6 @@ class ArticleController extends Controller
         return $topics;
     }
 
-    public function articles(Request $request)
-    {
-        $articles = Article::with('author')->paginate(20);
-        return $articles;
-    }
     public function article(Request $request)
     {
         $id = $request->input("id");
@@ -46,4 +41,9 @@ class ArticleController extends Controller
         return $article;
     }
 
+    public function topic(Request $request)
+    {
+        $articles = Article::with('author','topic')->where('id','!=',$headline -> id)->paginate(20);
+        return $articles;
+    }
 }
