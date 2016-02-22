@@ -16,7 +16,7 @@ class ArticleController extends Controller
 {
     public function topics(Request $request)
     {
-        $topics = Topic::orderBy('id')->get();
+        $topics = Topic::orderBy('sort', 'desc')->where('is_enable','=',true)->get();;
         return $topics;
     }
 
@@ -26,6 +26,7 @@ class ArticleController extends Controller
         $article = Article::with('author','topic')->find($id);
         return $article;
     }
+
     public function homepage(Request $request)
     {
         $headline = ArticleCoverModel::with('author','topic')->where('is_headlines',true)->first();
